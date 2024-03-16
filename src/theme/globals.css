@@ -17,7 +17,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    @apply bg-base text-high overflow-x-hidden scroll-smooth antialiased;
+    @apply bg-primary text-text-primary overflow-x-hidden scroll-smooth antialiased;
   }
 
   h1,
@@ -46,8 +46,8 @@
   }
 
   ::selection {
-    -webkit-text-fill-color: #0b0b0b;
-    @apply bg-primary/70;
+    -webkit-text-fill-color: #eee;
+    @apply bg-low/40;
   }
 
   @media (pointer: fine) {
@@ -67,11 +67,11 @@
     }
 
     :hover::-webkit-scrollbar-thumb {
-      @apply bg-elevation-3;
+      @apply bg-low;
     }
 
     ::-webkit-scrollbar-thumb:hover {
-      @apply bg-elevation-2;
+      @apply bg-high;
     }
   }
 }
