@@ -17,7 +17,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    @apply bg-primary text-text-primary font-jakarta overflow-x-hidden scroll-smooth antialiased;
+    @apply bg-low text-text-primary font-jakarta overflow-x-hidden scroll-smooth antialiased;
   }
 
   h1,
@@ -47,7 +47,7 @@
 
   ::selection {
     -webkit-text-fill-color: #eee;
-    @apply bg-low/40;
+    @apply bg-text-secondary/30;
   }
 
   @media (pointer: fine) {
