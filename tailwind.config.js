@@ -7,6 +7,9 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     keyframes,
+    fontFamily: {
+      jakarta: ['"Plus Jakarta Sans Variable"', 'sans-serif'],
+    },
     screens: {
       xs: '480px',
       sm: '620px',
@@ -14,6 +17,7 @@ export default {
       lg: '1024px',
       xl: '1232px',
     },
+
     extend: {
       animation: {
         contentShow: 'contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1)',

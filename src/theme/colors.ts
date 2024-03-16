@@ -6,15 +6,13 @@ export const colors = {
   // semantic colors
   primary: '#111111',
   secondary: '#2a2a2a',
-  tertiary: '#0f0f0f',
-  high: '#eeeeee',
-  low: '#b4b4b4',
+  high: '#222',
+  low: '#0f0f0f',
   text: {
     primary: '#eeeeee',
     secondary: '#b4b4b4',
     disabled: '#484848  ',
   },
-
   status: {
     info: '#00C9FF',
     danger: '#FE962E',
