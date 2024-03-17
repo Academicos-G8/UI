@@ -33,7 +33,7 @@ export default function ProductsContent() {
           onChange={handleSearch}
         />
 
-        <FilterDropdown />
+        <FilterDropdown items={PRODUCTS} />
       </div>
 
       <div className='h-full grow pl-4 pr-1'>
