@@ -18,10 +18,9 @@ export default function ProductsList({
         }
       }
 
-
     return (
       <button
-        className='mb-[2px] flex h-10 w-full items-center rounded px-6 hover:bg-high'
+        className='mb-[2px] flex h-10 w-full items-center rounded px-6 hover:bg-high active:bg-slate-50'
         onClick={handleClick} // Define o evento de clique para chamar o manipulador
       >
         {data.produto}
@@ -39,6 +38,7 @@ export default function ProductsList({
       data={items}
       totalCount={(items && items.length) ?? 0}
       itemContent={(index, data) => itemContent(index, data)}
+
     />
   )
 }

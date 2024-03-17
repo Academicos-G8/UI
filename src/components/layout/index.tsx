@@ -11,7 +11,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
       <Sidebar />
       <div className='flex grow flex-col'>
         <Header />
-        <div className='w-full grow p-4'>{children}</div>
+        <div className='w-full grow p-4 overflow-auto'>{children}</div>
       </div>
     </main>
   )

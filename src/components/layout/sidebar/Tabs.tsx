@@ -37,8 +37,8 @@ export default function Tabs({ className, ...props }: TabsProps) {
         <TabsPrimitive.Trigger value='products' className={classes.trigger()}>
           PRODUCTS
         </TabsPrimitive.Trigger>
-        <TabsPrimitive.Trigger value='others' className={classes.trigger()}>
-          OTHERS
+        <TabsPrimitive.Trigger value='peoples' className={classes.trigger()}>
+          PEOPLES
         </TabsPrimitive.Trigger>
         <TabsPrimitive.Indicator className={classes.indicator()} />
       </TabsPrimitive.List>
@@ -47,9 +47,9 @@ export default function Tabs({ className, ...props }: TabsProps) {
         <ProductsContent />
       </TabsPrimitive.Content>
 
-      <TabsPrimitive.Content value='others' className={classes.content()}>
+      <TabsPrimitive.Content value='peoples' className={classes.content()}>
         <EmployeesContent />
-       </TabsPrimitive.Content>
+      </TabsPrimitive.Content>
     </TabsPrimitive.Root>
   )
 }

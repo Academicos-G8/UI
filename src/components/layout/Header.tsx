@@ -2,7 +2,7 @@ import HamburguerIcon from '../icons/hamburguer'
 
 export default function Header() {
   return (
-    <header className='bg-primary border-secondary flex h-[72px] items-center border-b px-6'>
+    <header className='bg-primary border-secondary flex h-[72px] shrink-0 items-center border-b px-6'>
       <button className='text-text-primary hover:text-text-secondary mr-6 p-1 text-xl'>
         <HamburguerIcon />
       </button>
