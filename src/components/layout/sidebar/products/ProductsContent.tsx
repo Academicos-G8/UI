@@ -1,13 +1,17 @@
-import { useState } from 'react'
 import Input from '@/components/ui/Input'
-import ProductsList from './ProductsList'
-import FilterDropdown from './FilterDropdown'
 import { PRODUCTS, ProductItem } from '@/mocks/products'
+import { useAppDispatch, } from '@/store'
+import { setSelectedProduct } from '@/store/reducers/productSlice'
+import { useState } from 'react'
+import FilterDropdown from '../FilterDropdown'
+import ProductsList from './ProductsList'
 
 export default function ProductsContent() {
-   const sortedProducts = [...PRODUCTS].sort((a, b) =>
+  const sortedProducts = [...PRODUCTS].sort((a, b) =>
     a.MATERIAL.toString().localeCompare(b.MATERIAL.toString())
   )
+
+  const dispatch = useAppDispatch()
 
   const [products, setProducts] = useState<ProductItem[]>(sortedProducts)
 
@@ -33,6 +37,13 @@ export default function ProductsContent() {
 
     setProducts(filtered)
   }
+  const handleProductClick = (productId: string) => {
+    const productDetails =
+      products.find((product) => product.ID === productId) || null
+    dispatch(setSelectedProduct(productDetails))
+
+    console.log('Product clicked:', productDetails)
+  }
 
   return (
     <div className='flex h-full grow flex-col gap-4'>
@@ -47,7 +58,7 @@ export default function ProductsContent() {
       </div>
 
       <div className='h-full grow pl-4 pr-1'>
-        <ProductsList items={products} />
+        <ProductsList items={products} onProductClick={handleProductClick} />
       </div>
     </div>
   )

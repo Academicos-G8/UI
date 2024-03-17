@@ -1,7 +1,8 @@
 import { cn } from '@/utils/cn'
 import { Tabs as TabsPrimitive, TabsRootProps } from '@ark-ui/react'
 import { VariantProps, tv } from 'tailwind-variants'
-import ProductsContent from './ProductsContent'
+import ProductsContent from './products/ProductsContent'
+import EmployeesContent from './employees/EmployeesContent'
 
 const tabsStyles = tv({
   slots: {
@@ -47,8 +48,8 @@ export default function Tabs({ className, ...props }: TabsProps) {
       </TabsPrimitive.Content>
 
       <TabsPrimitive.Content value='others' className={classes.content()}>
-        Others
-      </TabsPrimitive.Content>
+        <EmployeesContent />
+       </TabsPrimitive.Content>
     </TabsPrimitive.Root>
   )
 }
