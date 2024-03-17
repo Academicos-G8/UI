@@ -2,15 +2,19 @@ import { People } from '@/components/interface/people'
 import Input from '@/components/ui/Input'
 
 import { useAppDispatch } from '@/store'
-import { setSelectedEmployees } from '@/store/reducers/employeesSlice'
-import { setSelectedProduct } from '@/store/reducers/productSlice'
-import { useGetPeopleQuery, useLazyGetPeopleIdQuery } from '@/store/services/operation-api'
-import { useState } from 'react'
+import {
+  clearSelectedEmployees,
+  setSelectedEmployees,
+} from '@/store/reducers/employeesSlice'
+import {
+  useGetPeopleQuery,
+  useLazyGetPeopleIdQuery,
+} from '@/store/services/operation-api'
+import { useCallback, useEffect, useState } from 'react'
 import EmployeesList from './EmployeesList'
+import { clearSelectedProduct } from '@/store/reducers/productSlice'
 
 export default function EmployeesContent() {
-
-
   const { data: employeesData = [], isFetching } = useGetPeopleQuery(
     undefined,
     {
@@ -18,11 +22,15 @@ export default function EmployeesContent() {
     }
   )
 
-  const [trigger, { data: employeeDetails }] = useLazyGetPeopleIdQuery()
+  const [trigger, { isFetching: fetchingDetails }] = useLazyGetPeopleIdQuery()
 
-
-  const [employees, setEmployees] = useState<People[]>(employeesData)
+  const [employees, setEmployees] = useState<People[]>([])
   const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    if (fetchingDetails) return
+    setEmployees(employeesData)
+  }, [employeesData, fetchingDetails])
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
@@ -48,12 +56,21 @@ export default function EmployeesContent() {
     setEmployees(filteredEmployees)
   }
 
-  const handleProductClick = (productId: string) => {
-
-    dispatch(setSelectedEmployees(employeeDetails))
-    trigger(productId)
-    // dispatch(setSelectedProduct(undefined))
-  }
+  const handleProductClick = useCallback(
+    async (productId: string) => {
+      dispatch(clearSelectedProduct())
+      dispatch(clearSelectedEmployees())
+      await trigger(productId)
+        .unwrap() // Garante que você lide com a promise retornada
+        .then((productDetails) => {
+          dispatch(setSelectedEmployees(productDetails)) // Atualiza o estado com os novos detalhes obtidos
+        })
+        .catch((error) =>
+          console.error('Failed to fetch product details:', error)
+        )
+    },
+    [dispatch, trigger]
+  )
 
   return (
     <div className='flex h-full grow flex-col gap-4'>

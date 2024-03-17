@@ -11,11 +11,13 @@ export default function ProductsList({
   onProductClick: (productId: string) => void
 }) {
   const InnerItem = memo(({ data }: { index: number; data: Products }) => {
-    const handleClick = () => {
-      if (onProductClick) {
-        onProductClick(data.produto)
+      const handleClick = () => {
+        if (onProductClick && data.produto) {
+          // Supondo que `data` tenha um campo `id`
+          onProductClick(data.produto.toString()) // Chame `onProductClick` com o ID do produto
+        }
       }
-    }
+
 
     return (
       <button

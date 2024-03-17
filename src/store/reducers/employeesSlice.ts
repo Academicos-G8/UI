@@ -1,4 +1,4 @@
-import { Employees, People } from '@/components/interface/people'
+import { Employees } from '@/components/interface/people'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 interface IEmployeesState {
@@ -19,9 +19,15 @@ const employeesSlice = createSlice({
     ) {
       state.selectedEmployees = action.payload
     },
+    clearSelectedEmployees(
+      state: IEmployeesState,
+      action: PayloadAction<undefined>
+    ) {
+      state.selectedEmployees = action.payload
+    },
   },
 })
 
-export const { setSelectedEmployees } = employeesSlice.actions
+export const { setSelectedEmployees,clearSelectedEmployees } = employeesSlice.actions
 
 export default employeesSlice

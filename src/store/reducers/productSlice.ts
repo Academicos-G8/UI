@@ -19,9 +19,12 @@ const productSlice = createSlice({
     ) {
       state.selectedProduct = action.payload
     },
+    clearSelectedProduct(state: IProductState, action: PayloadAction<undefined>) {
+      state.selectedProduct = action.payload
+    },
   },
 })
 
-export const { setSelectedProduct } = productSlice.actions
+export const { setSelectedProduct,clearSelectedProduct } = productSlice.actions
 
 export default productSlice
