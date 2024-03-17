@@ -1,4 +1,4 @@
-import { EmployeesProps } from '@/mocks/employees'
+import { People } from '@/components/interface/people'
 import { memo } from 'react'
 import { Virtuoso } from 'react-virtuoso'
 
@@ -7,14 +7,14 @@ export default function EmployeesList({
   items,
   onProductClick,
 }: {
-  items: EmployeesProps[]
+  items: People[]
   onProductClick: (productId: string) => void
 }) {
   const InnerItem = memo(
-    ({ data }: { index: number; data: EmployeesProps }) => {
+    ({ data }: { index: number; data: People }) => {
       const handleClick = () => {
         if (onProductClick) {
-          onProductClick(data.id)
+          onProductClick(data.name)
         }
       }
 
@@ -29,7 +29,7 @@ export default function EmployeesList({
     }
   )
 
-  const itemContent = (index: number, data: EmployeesProps) => {
+  const itemContent = (index: number, data: People) => {
     return <InnerItem index={index} data={data} />
   }
 

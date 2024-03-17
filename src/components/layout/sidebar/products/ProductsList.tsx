@@ -1,35 +1,33 @@
-import { Virtuoso } from 'react-virtuoso'
+import { Products } from '@/components/interface/products'
 import { memo } from 'react'
-import { ProductItem } from '@/mocks/products'
+import { Virtuoso } from 'react-virtuoso'
 
 // Adiciona uma nova prop 'onProductClick' para o tipo de props do componente ProductsList
 export default function ProductsList({
   items,
   onProductClick,
 }: {
-  items: ProductItem[]
+  items: Products[]
   onProductClick: (productId: string) => void
 }) {
-  const InnerItem = memo(
-    ({ data }: { index: number; data: ProductItem }) => {
-       const handleClick = () => {
-        if (onProductClick) {
-          onProductClick(data.ID)
-        }
+  const InnerItem = memo(({ data }: { index: number; data: Products }) => {
+    const handleClick = () => {
+      if (onProductClick) {
+        onProductClick(data.produto)
       }
-
-      return (
-        <button
-          className='mb-[2px] flex h-10 w-full items-center rounded px-6 hover:bg-high'
-          onClick={handleClick} // Define o evento de clique para chamar o manipulador
-        >
-          {data.PRODUTO} / {data.MATERIAL}
-        </button>
-      )
     }
-  )
 
-  const itemContent = (index: number, data: ProductItem) => {
+    return (
+      <button
+        className='mb-[2px] flex h-10 w-full items-center rounded px-6 hover:bg-high'
+        onClick={handleClick} // Define o evento de clique para chamar o manipulador
+      >
+        {data.produto}
+      </button>
+    )
+  })
+
+  const itemContent = (index: number, data: Products) => {
     return <InnerItem index={index} data={data} />
   }
 

@@ -1,30 +1,33 @@
+import { Products } from '@/components/interface/products'
 import Input from '@/components/ui/Input'
-import { PRODUCTS, ProductItem } from '@/mocks/products'
-import { useAppDispatch, } from '@/store'
+import { useAppDispatch } from '@/store'
 import { setSelectedProduct } from '@/store/reducers/productSlice'
+import {
+  useGetProductQuery,
+  useLazyGetProductIdQuery,
+} from '@/store/services/operation-api'
 import { useState } from 'react'
 import FilterDropdown from '../FilterDropdown'
 import ProductsList from './ProductsList'
 
 export default function ProductsContent() {
-  const sortedProducts = [...PRODUCTS].sort((a, b) =>
-    a.MATERIAL.toString().localeCompare(b.MATERIAL.toString())
-  )
+  const { data: product = [], isFetching } = useGetProductQuery(undefined)
 
   const dispatch = useAppDispatch()
 
-  const [products, setProducts] = useState<ProductItem[]>(sortedProducts)
+  const [products, setProducts] = useState<Products[]>(product)
+  const [trigger, { data:productDetails }] = useLazyGetProductIdQuery()
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
 
     if (value === '') {
-      setProducts(sortedProducts)
+      setProducts(product)
       return
     }
 
-    const filtered = sortedProducts.filter((product) => {
-      const materialNormalized = product.MATERIAL.toString()
+    const filtered = product.filter((product) => {
+      const materialNormalized = product.produto
         .toLowerCase()
         .normalize('NFD')
         .replace(/[\u0300-\u036f]/g, '')
@@ -34,18 +37,15 @@ export default function ProductsContent() {
         .replace(/[\u0300-\u036f]/g, '')
       return materialNormalized.includes(searchNormalized)
     })
-
     setProducts(filtered)
   }
   const handleProductClick = (productId: string) => {
-    const productDetails =
-      products.find((product) => product.ID === productId) || null
+
     dispatch(setSelectedProduct(productDetails))
-
-    console.log('Product clicked:', productDetails)
+    // dispatch(setSelectedEmployees(undefined))
+    trigger(productId)
   }
-
-  return (
+   return (
     <div className='flex h-full grow flex-col gap-4'>
       <div className='mx-4 flex items-center gap-2'>
         <Input
@@ -54,11 +54,14 @@ export default function ProductsContent() {
           onChange={handleSearch}
         />
 
-        <FilterDropdown items={sortedProducts} />
+        <FilterDropdown items={products} />
       </div>
 
       <div className='h-full grow pl-4 pr-1'>
-        <ProductsList items={products} onProductClick={handleProductClick} />
+        {isFetching && <div>Carregando...</div>}
+        {!isFetching && (
+          <ProductsList items={products} onProductClick={handleProductClick} />
+        )}
       </div>
     </div>
   )

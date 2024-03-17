@@ -1,13 +1,12 @@
-import { EmployeesProps } from '@/mocks/employees'
-import { createSlice } from '@reduxjs/toolkit'
-import { PayloadAction } from '@reduxjs/toolkit'
+import { Employees, People } from '@/components/interface/people'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 interface IEmployeesState {
-  selectedEmployees: EmployeesProps | null
+  selectedEmployees: Employees | undefined
 }
 
 const initialState: IEmployeesState = {
-  selectedEmployees: null,
+  selectedEmployees: undefined,
 }
 
 const employeesSlice = createSlice({
@@ -16,7 +15,7 @@ const employeesSlice = createSlice({
   reducers: {
     setSelectedEmployees(
       state: IEmployeesState,
-      action: PayloadAction<EmployeesProps | null>
+      action: PayloadAction<Employees | undefined>
     ) {
       state.selectedEmployees = action.payload
     },

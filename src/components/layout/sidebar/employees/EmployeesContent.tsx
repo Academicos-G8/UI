@@ -1,27 +1,39 @@
-import { useState } from 'react'
+import { People } from '@/components/interface/people'
 import Input from '@/components/ui/Input'
-import {
-  EmployeesProps,
-  Employees as initialEmployees,
-} from '@/mocks/employees'
-import EmployeesList from './EmployeesList'
+
 import { useAppDispatch } from '@/store'
 import { setSelectedEmployees } from '@/store/reducers/employeesSlice'
+import { setSelectedProduct } from '@/store/reducers/productSlice'
+import { useGetPeopleQuery, useLazyGetPeopleIdQuery } from '@/store/services/operation-api'
+import { useState } from 'react'
+import EmployeesList from './EmployeesList'
 
 export default function EmployeesContent() {
-  const [employees, setEmployees] = useState<EmployeesProps[]>(initialEmployees)
+
+
+  const { data: employeesData = [], isFetching } = useGetPeopleQuery(
+    undefined,
+    {
+      refetchOnMountOrArgChange: true,
+    }
+  )
+
+  const [trigger, { data: employeeDetails }] = useLazyGetPeopleIdQuery()
+
+
+  const [employees, setEmployees] = useState<People[]>(employeesData)
   const dispatch = useAppDispatch()
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
 
     if (value === '') {
-      setEmployees(initialEmployees)
+      setEmployees(employeesData)
       return
     }
 
     // Filtro baseado na entrada do usuário
-    const filteredEmployees = initialEmployees.filter((employee) => {
+    const filteredEmployees = employeesData.filter((employee) => {
       const nameNormalized = employee.name
         .toLowerCase()
         .normalize('NFD')
@@ -37,11 +49,10 @@ export default function EmployeesContent() {
   }
 
   const handleProductClick = (productId: string) => {
-    const employeeDetails =
-      employees.find((employee) => employee.id === productId) || null
 
     dispatch(setSelectedEmployees(employeeDetails))
-    console.log('Employee clicked:', employeeDetails)
+    trigger(productId)
+    // dispatch(setSelectedProduct(undefined))
   }
 
   return (
@@ -53,7 +64,10 @@ export default function EmployeesContent() {
           onChange={handleSearch}
         />
       </div>
-      <EmployeesList items={employees} onProductClick={handleProductClick} />
+      {isFetching && <div>Carregando...</div>}
+      {!isFetching && (
+        <EmployeesList items={employees} onProductClick={handleProductClick} />
+      )}
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import BulletListIcon from '@/components/icons/bulletList'
-import { ProductItem } from '@/mocks/products'
+import { Products } from '@/components/interface/products'
 import { tv } from 'tailwind-variants'
 
 const filterDropdownStyles = tv({
@@ -14,7 +14,7 @@ const filterDropdownStyles = tv({
 })
 
 export type FilterDropdownProps = {
-  items: ProductItem[]
+  items: Products[]
 }
 
 export default function FilterDropdown({ items }: FilterDropdownProps) {

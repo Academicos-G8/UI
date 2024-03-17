@@ -1,13 +1,12 @@
-import { ProductItem } from '@/mocks/products'
-import { createSlice } from '@reduxjs/toolkit'
-import { PayloadAction } from '@reduxjs/toolkit'
+import { Feedback } from '@/components/interface/products'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 interface IProductState {
-  selectedProduct: ProductItem | null
+  selectedProduct: Feedback | undefined
 }
 
 const initialState: IProductState = {
-  selectedProduct: null,
+  selectedProduct: undefined,
 }
 
 const productSlice = createSlice({
@@ -16,7 +15,7 @@ const productSlice = createSlice({
   reducers: {
     setSelectedProduct(
       state: IProductState,
-      action: PayloadAction<ProductItem | null>
+      action: PayloadAction<Feedback | undefined>
     ) {
       state.selectedProduct = action.payload
     },
