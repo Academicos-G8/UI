@@ -1,24 +1,34 @@
+import { useState } from 'react'
 import Input from '@/components/ui/Input'
 import ProductsList from './ProductsList'
-import { PRODUCTS } from '@/mocks/products'
-import { useState } from 'react'
 import FilterDropdown from './FilterDropdown'
+import { PRODUCTS, ProductItem } from '@/mocks/products'
 
 export default function ProductsContent() {
-  const [products, setProducts] = useState(PRODUCTS)
+   const sortedProducts = [...PRODUCTS].sort((a, b) =>
+    a.MATERIAL.toString().localeCompare(b.MATERIAL.toString())
+  )
+
+  const [products, setProducts] = useState<ProductItem[]>(sortedProducts)
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
 
     if (value === '') {
-      setProducts(PRODUCTS)
+      setProducts(sortedProducts)
       return
     }
 
-    const filtered = PRODUCTS.filter((product) => {
-      return product.PRODUTO.toString()
+    const filtered = sortedProducts.filter((product) => {
+      const materialNormalized = product.MATERIAL.toString()
         .toLowerCase()
-        .includes(value.toLowerCase())
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+      const searchNormalized = value
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+      return materialNormalized.includes(searchNormalized)
     })
 
     setProducts(filtered)
@@ -33,7 +43,7 @@ export default function ProductsContent() {
           onChange={handleSearch}
         />
 
-        <FilterDropdown items={PRODUCTS} />
+        <FilterDropdown items={sortedProducts} />
       </div>
 
       <div className='h-full grow pl-4 pr-1'>
