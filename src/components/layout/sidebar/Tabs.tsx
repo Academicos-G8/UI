@@ -1,19 +1,20 @@
 import { cn } from '@/utils/cn'
 import { Tabs as TabsPrimitive, TabsRootProps } from '@ark-ui/react'
 import { VariantProps, tv } from 'tailwind-variants'
+import ProductsContent from './ProductsContent'
 
 const tabsStyles = tv({
   slots: {
-    root: ['flex w-full flex-col gap-6'],
+    root: ['flex w-full grow flex-col gap-6'],
     trigger: [
       'text-text-secondary relative h-10 w-full rounded text-xs font-bold',
       'aria-selected:text-text-primary z-0',
     ],
     list: [
-      'bg-low relative z-0 flex shrink-0 overflow-auto p-1',
+      'bg-low relative z-0 mx-4 flex shrink-0 overflow-auto p-1',
       'border-secondary rounded-lg border',
     ],
-    content: ['w-full'],
+    content: ['h-full w-full grow'],
     indicator: [
       'bg-high left-[--left] top-[--top] -z-10 h-[--height] w-[--width] rounded',
     ],
@@ -42,11 +43,11 @@ export default function Tabs({ className, ...props }: TabsProps) {
       </TabsPrimitive.List>
 
       <TabsPrimitive.Content value='products' className={classes.content()}>
-        React Content
+        <ProductsContent />
       </TabsPrimitive.Content>
 
       <TabsPrimitive.Content value='others' className={classes.content()}>
-        Vue Content
+        Others
       </TabsPrimitive.Content>
     </TabsPrimitive.Root>
   )

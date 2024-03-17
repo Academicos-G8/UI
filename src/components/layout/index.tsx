@@ -9,9 +9,9 @@ export default function MainLayout({ children }: MainLayoutProps) {
   return (
     <main className='flex h-screen w-full'>
       <Sidebar />
-      <div className='grow'>
+      <div className='flex grow flex-col'>
         <Header />
-        {children}
+        <div className='w-full grow p-4'>{children}</div>
       </div>
     </main>
   )

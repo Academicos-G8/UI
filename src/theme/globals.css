@@ -67,20 +67,16 @@
     }
 
     :hover::-webkit-scrollbar-thumb {
-      @apply bg-low;
+      @apply bg-high;
     }
 
     ::-webkit-scrollbar-thumb:hover {
-      @apply bg-high;
+      @apply bg-secondary;
     }
   }
 }
 
 @layer utilities {
-  .text-title {
-    @apply text-5xl font-bold;
-  }
-
   .leading-normal {
     line-height: normal;
   }
